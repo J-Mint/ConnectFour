@@ -171,8 +171,19 @@ public class ConnectFour implements ActionListener {
 				}
 			}
 			//check vertical wins
+			for (int i1 = 0; i1 < 7; i1++) {
+				if ((buttons[i1+7].getBackground() == player) && (buttons[i1+14].getBackground() == player) && (buttons[i1+21].getBackground() == player) && (buttons[i1+28].getBackground() == player)){
+					winner(player, i1+7, i1 + 14, i1 + 21, i1 + 28);
+				}
+				if ((buttons[i1+14].getBackground() == player) && (buttons[i1+21].getBackground() == player) && (buttons[i1+28].getBackground() == player) && (buttons[i1+35].getBackground() == player)){
+					winner(player, i1 + 14, i1 + 21, i1 + 28, i1 + 35);
+				}
+				if ((buttons[i1+21].getBackground() == player) && (buttons[i1+28].getBackground() == player) && (buttons[i1+35].getBackground() == player) && (buttons[i1+42].getBackground() == player)){
+					winner(player, i1 + 21, i1 + 28, i1 + 35, i1 + 42);
+				}
+
 			//check diagonal wins
-	
+			}
 		}
 
 	}
