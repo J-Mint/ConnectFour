@@ -84,7 +84,7 @@ public class ConnectFour implements ActionListener {
 		// randomly pick which colour goes first
 		Random random = new Random();
 		int player = random.nextInt(2) + 1;
-		
+
 		if (player == 1) {
 			p1turn = true;
 			title_Label.setText("Red's Turn");
@@ -93,9 +93,9 @@ public class ConnectFour implements ActionListener {
 			title_Label.setText("Yellow's Turn");
 		}
 		// reenable the buttons on the starting row.
-				for (int i = 0; i < 7; i++) {
-					buttons[i].setEnabled(true);
-				}
+		for (int i = 0; i < 7; i++) {
+			buttons[i].setEnabled(true);
+		}
 
 	}
 
@@ -150,15 +150,29 @@ public class ConnectFour implements ActionListener {
 			} else {
 				player = Color.YELLOW;
 			}
-			// a quicker way to check for a match...
+			// check horizontal wins
 			for (int i1 = 0; i1 < 7; i1++) {
 				int i2 = i1 * 7;
 				if ((buttons[i2 + 0].getBackground() == player) && (buttons[i2 + 1].getBackground() == player)
 						&& (buttons[i2 + 2].getBackground() == player) && (buttons[i2 + 3].getBackground() == player)) {
 					winner(player, i2, i2 + 1, i2 + 2, i2 + 3);
 				}
-				
+				if ((buttons[i2 + 1].getBackground() == player) && (buttons[i2 + 2].getBackground() == player)
+						&& (buttons[i2 + 3].getBackground() == player) && (buttons[i2 + 4].getBackground() == player)) {
+					winner(player, i2+1, i2 + 2, i2 + 3, i2 + 4);
+				}
+				if ((buttons[i2 + 2].getBackground() == player) && (buttons[i2 + 3].getBackground() == player)
+						&& (buttons[i2 + 4].getBackground() == player) && (buttons[i2 + 5].getBackground() == player)) {
+					winner(player, i2+2, i2 + 3, i2 + 4, i2 + 5);
+				}
+				if ((buttons[i2 + 3].getBackground() == player) && (buttons[i2 + 4].getBackground() == player)
+						&& (buttons[i2 + 5].getBackground() == player) && (buttons[i2 + 6].getBackground() == player)) {
+					winner(player, i2+3, i2 + 4, i2 + 5, i2 + 6);
+				}
 			}
+			//check vertical wins
+			//check diagonal wins
+	
 		}
 
 	}
@@ -173,7 +187,7 @@ public class ConnectFour implements ActionListener {
 		} else {
 			title_Label.setText("The winner is yellow");
 		}
-		
+
 		for (int i = 0; i < 7; i++) {
 			buttons[i].setEnabled(false);
 		}
