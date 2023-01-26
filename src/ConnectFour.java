@@ -10,6 +10,7 @@ import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -21,15 +22,51 @@ public class ConnectFour implements ActionListener {
 	private JButton buttons[];
 	private String buttonColors[];
 	private JLabel title_Label;
+	private JFrame game_Frame;
 
 	public ConnectFour() {
+		initialize();
+	}
+
+	public void startingPlayer() {
+		// disable the buttons on the starting row.
+		for (int i = 0; i < 7; i++) {
+			buttons[i].setEnabled(false);
+		}
+		// wait 2 seconds before displaying whose turn it is so that the user sees the
+		// game's title
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		// randomly pick which colour goes first
+		Random random = new Random();
+		int color = random.nextInt(2) + 1;
+
+		if (color == 1) {
+			p1turn = true;
+			title_Label.setText("Red's Turn");
+		} else {
+			p1turn = false;
+			title_Label.setText("Yellow's Turn");
+		}
+		// reenable the buttons on the starting row.
+		for (int i = 0; i < 7; i++) {
+			buttons[i].setEnabled(true);
+		}
+
+	}
+	
+	public void initialize() {
 		buttonColors = new String[49];
 		for (int i = 0; i < buttonColors.length; i++) {
 			setButtonColor(i, "dark_grey");
 		}
-		
+
 		// create the title bar
-		JFrame game_Frame = new JFrame();
+		game_Frame = new JFrame();
 		game_Frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		game_Frame.setSize(800, 800);
 		game_Frame.setVisible(true);
@@ -73,37 +110,6 @@ public class ConnectFour implements ActionListener {
 
 	}
 
-	public void startingPlayer() {
-		// disable the buttons on the starting row.
-		for (int i = 0; i < 7; i++) {
-			buttons[i].setEnabled(false);
-		}
-		// wait 2 seconds before displaying whose turn it is so that the user sees the
-		// game's title
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		// randomly pick which colour goes first
-		Random random = new Random();
-		int color = random.nextInt(2) + 1;
-
-		if (color == 1) {
-			p1turn = true;
-			title_Label.setText("Red's Turn");
-		} else {
-			p1turn = false;
-			title_Label.setText("Yellow's Turn");
-		}
-		// reenable the buttons on the starting row.
-		for (int i = 0; i < 7; i++) {
-			buttons[i].setEnabled(true);
-		}
-
-	}
-
 	public int[] getColumnList(int i) {
 		int columnNumbers[] = { i + 42, i + 35, i + 28, i + 21, i + 14, i + 7, i };
 		return columnNumbers;
@@ -112,11 +118,11 @@ public class ConnectFour implements ActionListener {
 	public String getButtonColor(int i) {
 		return buttonColors[i];
 	}
-	
+
 	public void setButtonColor(int i, String color) {
 		buttonColors[i] = color;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// find out which button was pressed
@@ -156,7 +162,6 @@ public class ConnectFour implements ActionListener {
 
 	}
 
-	
 	public void horizontalWin(String color) {
 		for (int i1 = 0; i1 < 7; i1++) {
 			int i2 = i1 * 7;
@@ -166,58 +171,67 @@ public class ConnectFour implements ActionListener {
 			}
 			if ((getButtonColor(i2 + 1) == color) && (getButtonColor(i2 + 2) == color)
 					&& (getButtonColor(i2 + 3) == color) && (getButtonColor(i2 + 4) == color)) {
-				winner(color, i2+1, i2 + 2, i2 + 3, i2 + 4);
+				winner(color, i2 + 1, i2 + 2, i2 + 3, i2 + 4);
 			}
 			if ((getButtonColor(i2 + 2) == color) && (getButtonColor(i2 + 3) == color)
 					&& (getButtonColor(i2 + 4) == color) && (getButtonColor(i2 + 5) == color)) {
-				winner(color, i2+2, i2 + 3, i2 + 4, i2 + 5);
+				winner(color, i2 + 2, i2 + 3, i2 + 4, i2 + 5);
 			}
 			if ((getButtonColor(i2 + 3) == color) && (getButtonColor(i2 + 4) == color)
 					&& (getButtonColor(i2 + 5) == color) && (getButtonColor(i2 + 6) == color)) {
-				winner(color, i2+3, i2 + 4, i2 + 5, i2 + 6);
+				winner(color, i2 + 3, i2 + 4, i2 + 5, i2 + 6);
 			}
 		}
 	}
-	
+
 	public void VerticalWin(String color) {
 		for (int i1 = 0; i1 < 7; i1++) {
-			if ((getButtonColor(i1+7) == color) && (getButtonColor(i1+14) == color) && (getButtonColor(i1+21) == color) && (getButtonColor(i1+28) == color)){
-				winner(color, i1+7, i1 + 14, i1 + 21, i1 + 28);
+			if ((getButtonColor(i1 + 7) == color) && (getButtonColor(i1 + 14) == color)
+					&& (getButtonColor(i1 + 21) == color) && (getButtonColor(i1 + 28) == color)) {
+				winner(color, i1 + 7, i1 + 14, i1 + 21, i1 + 28);
 			}
-			if ((getButtonColor(i1+14) == color) && (getButtonColor(i1+21) == color) && (getButtonColor(i1+28) == color) && (getButtonColor(i1+35) == color)){
+			if ((getButtonColor(i1 + 14) == color) && (getButtonColor(i1 + 21) == color)
+					&& (getButtonColor(i1 + 28) == color) && (getButtonColor(i1 + 35) == color)) {
 				winner(color, i1 + 14, i1 + 21, i1 + 28, i1 + 35);
 			}
-			if ((getButtonColor(i1+21) == color) && (getButtonColor(i1+28) == color) && (getButtonColor(i1+35) == color) && (getButtonColor(i1+42) == color)){
+			if ((getButtonColor(i1 + 21) == color) && (getButtonColor(i1 + 28) == color)
+					&& (getButtonColor(i1 + 35) == color) && (getButtonColor(i1 + 42) == color)) {
 				winner(color, i1 + 21, i1 + 28, i1 + 35, i1 + 42);
 			}
 		}
 	}
-	
+
 	public void diagonalWin(String color) {
 		for (int i1 = 0; i1 < 5; i1++) {
-			// up 
-			if ((getButtonColor(i1+28) == color) && (getButtonColor(i1+22) == color) && (getButtonColor(i1+16) == color) && (getButtonColor(i1+10) == color)){
-				winner(color, i1+28, i1 + 22, i1 + 16, i1 + 10);
+			// up
+			if ((getButtonColor(i1 + 28) == color) && (getButtonColor(i1 + 22) == color)
+					&& (getButtonColor(i1 + 16) == color) && (getButtonColor(i1 + 10) == color)) {
+				winner(color, i1 + 28, i1 + 22, i1 + 16, i1 + 10);
 			}
-			if ((getButtonColor(i1+35) == color) && (getButtonColor(i1+29) == color) && (getButtonColor(i1+23) == color) && (getButtonColor(i1+17) == color)){
-				winner(color, i1+35, i1 + 29, i1 + 23, i1 + 17);
+			if ((getButtonColor(i1 + 35) == color) && (getButtonColor(i1 + 29) == color)
+					&& (getButtonColor(i1 + 23) == color) && (getButtonColor(i1 + 17) == color)) {
+				winner(color, i1 + 35, i1 + 29, i1 + 23, i1 + 17);
 			}
-			if ((getButtonColor(i1+42) == color) && (getButtonColor(i1+36) == color) && (getButtonColor(i1+30) == color) && (getButtonColor(i1+24) == color)){
-				winner(color, i1+42, i1 + 36, i1 + 30, i1 + 24);
+			if ((getButtonColor(i1 + 42) == color) && (getButtonColor(i1 + 36) == color)
+					&& (getButtonColor(i1 + 30) == color) && (getButtonColor(i1 + 24) == color)) {
+				winner(color, i1 + 42, i1 + 36, i1 + 30, i1 + 24);
 			}
-			// down 
-			if ((getButtonColor(i1+7) == color) && (getButtonColor(i1+15) == color) && (getButtonColor(i1+23) == color) && (getButtonColor(i1+31) == color)){
-				winner(color, i1+7, i1 + 15, i1 + 23, i1 + 31);
+			// down
+			if ((getButtonColor(i1 + 7) == color) && (getButtonColor(i1 + 15) == color)
+					&& (getButtonColor(i1 + 23) == color) && (getButtonColor(i1 + 31) == color)) {
+				winner(color, i1 + 7, i1 + 15, i1 + 23, i1 + 31);
 			}
-			if ((getButtonColor(i1+14) == color) && (getButtonColor(i1+22) == color) && (getButtonColor(i1+30) == color) && (getButtonColor(i1+38) == color)){
-				winner(color, i1+14, i1 + 22, i1 + 30, i1 + 38);
+			if ((getButtonColor(i1 + 14) == color) && (getButtonColor(i1 + 22) == color)
+					&& (getButtonColor(i1 + 30) == color) && (getButtonColor(i1 + 38) == color)) {
+				winner(color, i1 + 14, i1 + 22, i1 + 30, i1 + 38);
 			}
-			if ((getButtonColor(i1+21) == color) && (getButtonColor(i1+29) == color) && (getButtonColor(i1+37) == color) && (getButtonColor(i1+45) == color)){
-				winner(color, i1+21, i1 + 29, i1 + 37, i1 + 45);
+			if ((getButtonColor(i1 + 21) == color) && (getButtonColor(i1 + 29) == color)
+					&& (getButtonColor(i1 + 37) == color) && (getButtonColor(i1 + 45) == color)) {
+				winner(color, i1 + 21, i1 + 29, i1 + 37, i1 + 45);
 			}
 		}
 	}
-	
+
 	public void winChecker() {
 		for (int i = 0; i < 2; i++) {
 			String color;
@@ -228,9 +242,9 @@ public class ConnectFour implements ActionListener {
 			}
 			// check horizontal wins
 			horizontalWin(color);
-			//check vertical wins
+			// check vertical wins
 			VerticalWin(color);
-			//check diagonal wins
+			// check diagonal wins
 			diagonalWin(color);
 		}
 
@@ -249,6 +263,19 @@ public class ConnectFour implements ActionListener {
 
 		for (int i = 0; i < 7; i++) {
 			buttons[i].setEnabled(false);
+		}
+		String[] responses = { "Play again", "Quit", "Cancel" };
+		int answer = JOptionPane.showOptionDialog(null, "Do you want to Play Again?", "Play Again Prompt", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, responses, responses[0]);
+		if (answer == 0) {
+			//play again
+			game_Frame.dispose();
+			initialize();
+		} else if(answer == 1) {
+			//quit
+			System.exit(0);
+		} else {
+			//cancel 
+			
 		}
 	}
 }
