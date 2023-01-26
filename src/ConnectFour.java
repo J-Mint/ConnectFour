@@ -110,12 +110,11 @@ public class ConnectFour implements ActionListener {
 	}
 
 	public String getButtonColor(int i) {
-		
-		return null;
+		return buttonColors[i];
 	}
 	
-	public void setButtonColor(int i, String Color) {
-		
+	public void setButtonColor(int i, String color) {
+		buttonColors[i] = color;
 	}
 	
 	@Override
@@ -196,6 +195,7 @@ public class ConnectFour implements ActionListener {
 	
 	public void diagonalWin(String color) {
 		for (int i1 = 0; i1 < 5; i1++) {
+			// up 
 			if ((getButtonColor(i1+28) == color) && (getButtonColor(i1+22) == color) && (getButtonColor(i1+16) == color) && (getButtonColor(i1+10) == color)){
 				winner(color, i1+28, i1 + 22, i1 + 16, i1 + 10);
 			}
@@ -204,6 +204,16 @@ public class ConnectFour implements ActionListener {
 			}
 			if ((getButtonColor(i1+42) == color) && (getButtonColor(i1+36) == color) && (getButtonColor(i1+30) == color) && (getButtonColor(i1+24) == color)){
 				winner(color, i1+42, i1 + 36, i1 + 30, i1 + 24);
+			}
+			// down 
+			if ((getButtonColor(i1+7) == color) && (getButtonColor(i1+15) == color) && (getButtonColor(i1+23) == color) && (getButtonColor(i1+31) == color)){
+				winner(color, i1+7, i1 + 15, i1 + 23, i1 + 31);
+			}
+			if ((getButtonColor(i1+14) == color) && (getButtonColor(i1+22) == color) && (getButtonColor(i1+30) == color) && (getButtonColor(i1+38) == color)){
+				winner(color, i1+14, i1 + 22, i1 + 30, i1 + 38);
+			}
+			if ((getButtonColor(i1+21) == color) && (getButtonColor(i1+29) == color) && (getButtonColor(i1+37) == color) && (getButtonColor(i1+45) == color)){
+				winner(color, i1+21, i1 + 29, i1 + 37, i1 + 45);
 			}
 		}
 	}
