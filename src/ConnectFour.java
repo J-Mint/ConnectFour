@@ -69,6 +69,10 @@ public class ConnectFour implements ActionListener {
 	}
 
 	public void startingPlayer() {
+		// disable the buttons on the starting row.
+		for (int i = 0; i < 7; i++) {
+			buttons[i].setEnabled(false);
+		}
 		// wait 2 seconds before displaying whose turn it is so that the user sees the
 		// game's title
 		try {
@@ -80,6 +84,7 @@ public class ConnectFour implements ActionListener {
 		// randomly pick which colour goes first
 		Random random = new Random();
 		int player = random.nextInt(2) + 1;
+		
 		if (player == 1) {
 			p1turn = true;
 			title_Label.setText("Red's Turn");
@@ -87,6 +92,10 @@ public class ConnectFour implements ActionListener {
 			p1turn = false;
 			title_Label.setText("Yellow's Turn");
 		}
+		// reenable the buttons on the starting row.
+				for (int i = 0; i < 7; i++) {
+					buttons[i].setEnabled(true);
+				}
 
 	}
 
